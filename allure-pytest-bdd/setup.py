@@ -24,11 +24,12 @@ install_requires = [
 
 
 def prepare_version():
-    from setuptools_scm import get_version
-    configuration = {"root": "..", "relative_to": __file__}
-    version = get_version(**configuration)
-    install_requires.append("allure-python-commons=={version}".format(version=version))
-    return configuration
+    # from setuptools_scm import get_version
+    # configuration = {"root": "..", "relative_to": __file__}
+    # version = get_version(**configuration)
+    # install_requires.append("allure-python-commons=={version}".format(version=version))
+    install_requires.append("allure-python-commons==2.8.32")
+    # return configuration
 
 
 def get_readme(fname):
@@ -38,7 +39,8 @@ def get_readme(fname):
 def main():
     setup(
         name=PACKAGE,
-        use_scm_version=prepare_version,
+        version="2.8.32-eliram01282021",
+        # use_scm_version=prepare_version,
         description="Allure pytest-bdd integration",
         url="https://github.com/allure-framework/allure-python",
         author="QAMetaSoftware, Stanislav Seliverstov",
