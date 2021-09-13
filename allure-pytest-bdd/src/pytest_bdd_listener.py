@@ -36,11 +36,13 @@ class PytestBDDListener(object):
                     step_result.status = Status.SKIPPED
                     self.lifecycle.stop_step(uuid=step_uuid)
 
+
     @pytest.hookimpl
     def pytest_bdd_before_scenario(self, request, feature, scenario):
         uuid = get_uuid(request.node.nodeid)
         full_name = get_full_name(feature, scenario)
         name = get_name(request.node, scenario)
+
         with self.lifecycle.schedule_test_case(uuid=uuid) as test_result:
             test_result.fullName = full_name
             test_result.name = name
@@ -66,6 +68,7 @@ class PytestBDDListener(object):
         uuid = get_uuid(request.node.nodeid)
         with self.lifecycle.update_test_case(uuid=uuid) as test_result:
             test_result.stop = now()
+            test_result.labels.extend([Label(name=LabelType.TAG, value=value) for value in get_tags_from_environment_vars(self.config.option.env_vars_to_tag)])
 
     @pytest.hookimpl
     def pytest_bdd_before_step_call(self, request, feature, scenario, step, step_func, step_func_args):
